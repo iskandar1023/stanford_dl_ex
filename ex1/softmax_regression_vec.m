@@ -27,6 +27,13 @@ function [f,g] = softmax_regression(theta, X,y)
   %        Before returning g, make sure you form it back into a vector with g=g(:);
   %
 %%% YOUR CODE HERE %%%
-  
-  g=g(:); % make gradient a vector for minFunc
+  theta = [theta,zeros(n,1)]; % l33t hek
 
+  cmp = full(sparse(y, 1:m, 1)); %1{y(i)=k}
+  ex = exp(theta' * X);
+  P = ex ./ sum(ex);
+  f = - cmp(:)' * log(P(:)); % somehow using (:) seems "fix" the OOM condition
+
+  g = - X * (cmp - P)';
+  g = g(:,1:num_classes - 1);
+  g = g(:); % make gradient a vector for minFunc
