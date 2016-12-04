@@ -43,7 +43,12 @@ theta = rand(n,1);
 % in linear_regression.m
 %
 tic;
-options = struct('MaxIter', 200);
+
+% error: 'lbfgsAddC' undefined near line 21 column 3
+% https://github.com/amaas/stanford_dl_ex/issues/3
+% options = struct('MaxIter', 200);
+options = struct('MaxIter', 200,'useMex',0);
+
 theta = minFunc(@linear_regression, theta, options, train.X, train.y);
 fprintf('Optimization took %f seconds.\n', toc);
 
@@ -56,10 +61,10 @@ fprintf('Optimization took %f seconds.\n', toc);
 %
 % Uncomment the lines below to run your vectorized code.
 %Re-initialize parameters
-%theta = rand(n,1);
-%tic;
-%theta = minFunc(@linear_regression_vec, theta, options, train.X, train.y);
-%fprintf('Optimization took %f seconds.\n', toc);
+theta = rand(n,1);
+tic;
+theta = minFunc(@linear_regression_vec, theta, options, train.X, train.y);
+fprintf('Optimization took %f seconds.\n', toc);
 
 % Plot predicted prices and actual prices from training set.
 actual_prices = train.y;

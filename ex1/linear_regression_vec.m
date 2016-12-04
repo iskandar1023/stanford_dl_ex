@@ -6,11 +6,12 @@ function [f,g] = linear_regression_vec(theta, X,y)
   %       X(i,j) is the i'th coordinate of the j'th example.
   %   y - The target value for each example.  y(j) is the target for example j.
   %
-  m=size(X,2);
+  
+  m=size(X,2); % 400
   
   % initialize objective value and gradient.
   f = 0;
-  g = zeros(size(theta));
+  g = zeros(size(theta)); % 14,1
 
   %
   % TODO:  Compute the linear regression objective function and gradient 
@@ -18,3 +19,7 @@ function [f,g] = linear_regression_vec(theta, X,y)
   %        Store the objective function value in 'f', and the gradient in 'g'.
   %
 %%% YOUR CODE HERE %%%
+
+cmn = theta' * X - y; % compute commonly used value first
+f = sum(cmn .^ 2) / 2;
+g = X * cmn';
